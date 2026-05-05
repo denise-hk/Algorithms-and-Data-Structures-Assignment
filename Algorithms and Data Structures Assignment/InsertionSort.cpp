@@ -1,7 +1,7 @@
 #include "InsertionSort.h"
 #include<algorithm>
 
-void InsertionStep(SortState& state)
+void InsertionSort::step(SortState& state)
 {
 	int n = (int)state.values.size();
 	if (state.insertionI >= n)

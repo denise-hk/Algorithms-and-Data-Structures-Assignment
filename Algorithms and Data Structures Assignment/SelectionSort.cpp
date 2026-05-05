@@ -1,7 +1,7 @@
 #include "SelectionSort.h"
 #include <algorithm>
 
-void SelectionStep(SortState& state)
+void SelectionSort::step(SortState& state)
 {
     int n = (int)state.values.size();
 

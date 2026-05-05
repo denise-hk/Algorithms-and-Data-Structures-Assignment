@@ -1,33 +1,31 @@
 #include "BubbleSort.h"
 #include <algorithm>
 
-void BubbleStep(SortState& state)
+void BubbleSort::step(SortState& state)
 {
-	
-	int n = (int)state.values.size();
+    int n = (int)state.values.size();
 
-	if (state.bubbleI >= n - 1)
-	{
-		state.sorting = false;
-		state.sorted = true;
+    if (state.bubbleI >= n - 1)
+    {
+        state.sorting = false;
+        state.sorted = true;
+        return;
+    }
 
-		return;
-	}
+    if (state.bubbleJ >= n - state.bubbleI - 1)
+    {
+        state.bubbleJ = 0;
+        state.bubbleI++;
+        return;
+    }
 
-	if (state.bubbleJ >= n - state.bubbleI - 1)
-	{
-		state.bubbleJ = 0;
-		state.bubbleI++;
-		
-		return;
-	}
+    state.comparisons++;
 
-	state.comparisons++;
-	if (state.values[state.bubbleJ] > state.values[state.bubbleJ + 1])
-	{
-		std::swap(state.values[state.bubbleJ], state.values[state.bubbleJ + 1]);
-		state.swaps++;
-	}
+    if (state.values[state.bubbleJ] > state.values[state.bubbleJ + 1])
+    {
+        std::swap(state.values[state.bubbleJ], state.values[state.bubbleJ + 1]);
+        state.swaps++;
+    }
 
-	state.bubbleJ++;
+    state.bubbleJ++;
 }

@@ -4,60 +4,128 @@
 #include "InsertionSort.h"
 #include <cstdlib>
 
-void UpdateSort(SortState& state)
+SortState::SortState(int arraySize, int minValue, int maxValue)
+{
+	reset(arraySize, minValue, maxValue);
+}
+
+void SortState::update()
 {
 	
-	if (!state.sorting || state.sorted)
+	if (!sorting || sorted)
 		return;
 
-	switch (state.currentSort)
+	switch (currentSort)
 	{
-	   case SortType::Bubble:
-		   BubbleStep(state);
-		   break;
+		case SortType::Bubble:
+		{
+			BubbleSort bubbleSort;
+			bubbleSort.step(*this);
+			break;
+		}
 
-	   case SortType::Selection:
-		   SelectionStep(state);
-		   break;
 
-	   case SortType::Insertion:
-		   InsertionStep(state);
-		   break;
+		case SortType::Selection:
+		{
+			SelectionSort selectionSort;
+			selectionSort.step(*this);
+			break;
+		}
+
+
+		case SortType::Insertion:
+		{
+			InsertionSort insertionSort;
+			insertionSort.step(*this);
+			break;
+		};
 
 	}
 }
 	
 	
 
-void ResetSortState(SortState& state, int arraySize, int minValue, int maxValue)
+void SortState::reset(int arraySize, int minValue, int maxValue)
 {
-	state.values.clear();
+	values.clear();
+
+	this->minValue = minValue;
+	this->maxValue = maxValue;
 
 	for (int i = 0; i < arraySize; i++)
 	{
 		int value = minValue + rand() % (maxValue - minValue + 1);
-		state.values.push_back(value);
+		values.push_back(value);
 	}
 	
-	state.sorting = false;
-	state.sorted = false;
-	state.comparisons = 0;
-	state.swaps = 0;
+	sorting = false;
+	sorted = false;
+	comparisons = 0;
+	swaps = 0;
 
-	state.bubbleI = 0;
-	state.bubbleJ = 0;
+	bubbleI = 0;
+	bubbleJ = 0;
 
-	state.selectionI = 0;
-	state.selectionJ = 1;
-	state.minIndex = 0;
+	selectionI = 0;
+	selectionJ = 1;
+	minIndex = 0;
 
-	state.insertionI = 1;
-	state.insertionJ = 1;
+	insertionI = 1;
+	insertionJ = 1;
 
 }
-std::string GetSortName(SortType type)
+
+void SortState::start()
 {
-	switch (type)
+	if (!sorted)
+	{
+		sorting = true;
+	}
+}
+
+void SortState::stop()
+{
+	sorting = false;
+}
+
+bool SortState::isSorting() const
+{
+	return sorting;
+}
+
+bool SortState::isSorted() const
+{
+	return sorted;
+}
+
+const std::vector<int>& SortState::getValues() const
+{
+	return values;
+}
+
+int SortState::getComparisons() const
+{
+	return comparisons;
+}
+
+int SortState::getSwaps() const
+{
+	return swaps;
+}
+
+SortType SortState::getSortType() const
+{
+	return currentSort;
+}
+
+void SortState::setSortType(SortType type)
+{
+	currentSort = type;
+}
+
+std::string SortState::getSortName() const
+{
+	switch (currentSort)
 	{
 	case SortType::Bubble:
 		return "Bubble Sort";

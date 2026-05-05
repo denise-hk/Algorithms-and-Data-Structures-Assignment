@@ -1,4 +1,8 @@
 #pragma once
 #include "SortingAlgorithms.h"
 
-void InsertionStep(SortState& state);
+class InsertionSort
+{
+public:
+	void step(SortState& state);
+};

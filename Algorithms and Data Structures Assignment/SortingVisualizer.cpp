@@ -10,14 +10,16 @@ static const int maxValue = 200;
 
 
 SortVisualizer::SortVisualizer()
+	: _arraySize(ARRAY_SIZE),
+	sortState(ARRAY_SIZE, minValue, maxValue)
 {
-	ResetSortState(sortState, ARRAY_SIZE, minValue, maxValue);
 	ResetCurrentArray();
 }
 
+
 void SortVisualizer::ResetCurrentArray()
 {
-	ResetSortState(sortState, ARRAY_SIZE, minValue, maxValue);
+	sortState.reset(ARRAY_SIZE, minValue, maxValue);
 	
 }
 
@@ -57,7 +59,7 @@ void SortVisualizer::HandleInput()
 
 void SortVisualizer::Update()
 {
-	UpdateSort(sortState);
+	sortState.update();
 }
 
 void SortVisualizer::DrawBars() const
@@ -109,7 +111,7 @@ void SortVisualizer::Draw() const
 	DrawBars();
 	DrawText(TextFormat("Array size: %d", (int)sortState.values.size()), 20, 230, 20, BLACK);
 
-	DrawText(TextFormat("Algorithm: %s", GetSortName(sortState.currentSort).c_str()), 20, 20, 24, BLACK);
+	DrawText(TextFormat("Algorithm: %s", sortState.getSortName().c_str()), 20, 20, 24, BLACK);
 	DrawText(TextFormat("Comparison: %d", sortState.comparisons), 20, 55, 24, BLACK);
 	DrawText(TextFormat("Swaps: %d", sortState.swaps), 20, 90, 24, BLACK);
 
