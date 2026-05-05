@@ -10,7 +10,7 @@ enum class Scene
 	Maze
 };
 
-struct _Scene
+class _Scene
 {
 public:
 

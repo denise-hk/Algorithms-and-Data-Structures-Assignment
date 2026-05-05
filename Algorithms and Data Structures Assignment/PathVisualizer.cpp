@@ -6,32 +6,32 @@
 
 PathVisualizer::PathVisualizer()
 {
-	ResetPathState(pathState);
+	pathState.reset();
 }
 
 void PathVisualizer::HandleInput()
 {
 	if (IsKeyPressed(KEY_ONE))
 	{
-		ResetPathState(pathState);
+		pathState.reset();
 		pathState.currentPath = PathfinderType::Dijkstras;
 	}
 
 	if (IsKeyPressed(KEY_TWO))
 	{
-		ResetPathState(pathState);
+		pathState.reset();
 		pathState.currentPath = PathfinderType::BFS;
 	}
 
 	if (IsKeyPressed(KEY_THREE))
 	{
-		ResetPathState(pathState);
+		pathState.reset();
 		pathState.currentPath = PathfinderType::DFS;
 	}
 
 	if (IsKeyPressed(KEY_ENTER))
 	{
-		ResetPathState(pathState);
+		pathState.reset();
 		pathState.searching = true;
 		frameCounter = 0;
 	}
@@ -47,7 +47,7 @@ void PathVisualizer::Update()
 
 	if (frameCounter >= 5)
 	{
-		UpdatePath(pathState);
+		pathState.update();
 		frameCounter = 0;
 	}
 }

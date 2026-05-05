@@ -34,8 +34,13 @@ struct CompareQueueNode
 };
 
 
-struct PathState
+class PathState
 {
+public:
+
+	void update();
+	void reset();
+
 	bool searching = false;
 	bool found = false;
 	bool initialized = false;
@@ -59,5 +64,3 @@ struct PathState
 	std::stack<PathNode>dfsStack;
 };
 
-void UpdatePath(PathState& state);
-void ResetPathState(PathState& state);

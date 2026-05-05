@@ -4,17 +4,17 @@
 #include "DFS.h"
 
 
-void UpdatePath(PathState& state)
+void PathState::update()
 {
-	if (!state.searching || state.found)
+	if (!searching || found)
 		return;
 
-	switch (state.currentPath)
+	switch (currentPath)
 	{
 		case PathfinderType::Dijkstras:
 		{
 			Dijkstras dijkstra;
-			dijkstra.Step(state);
+			dijkstra.Step(*this);
 			break;
 		}
 			
@@ -22,37 +22,37 @@ void UpdatePath(PathState& state)
 		case PathfinderType::BFS:
 		{
 			BFS bfs;
-			bfs.Step(state);
+			bfs.Step(*this);
 			break;
 		}
 
 		case PathfinderType::DFS:
 		{
 			DFS dfs;
-			dfs.Step(state);
+			dfs.Step(*this);
 			break;
 		}
 	}
 }
 
-void ResetPathState(PathState& state)
+void PathState::reset()
 {
-	state.searching = false;
-	state.found = false;
-	state.initialized = false;
+	searching = false;
+	found = false;
+	initialized = false;
 
-	state.visitedNodes.clear();
-	state.path.clear();
+	visitedNodes.clear();
+	path.clear();
 
-	state.distance.clear();
-	state.previous.clear();
+	distance.clear();
+	previous.clear();
 
-	while (!state.openSet.empty())
-		state.openSet.pop();
+	while (!openSet.empty())
+		openSet.pop();
 
-	while (!state.bfsQueue.empty())
-		state.bfsQueue.pop();
+	while (!bfsQueue.empty())
+		bfsQueue.pop();
 
-	while (!state.dfsStack.empty())
-		state.dfsStack.pop();
+	while (!dfsStack.empty())
+		dfsStack.pop();
 }
