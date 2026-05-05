@@ -15,7 +15,7 @@ int main()
 	SetTargetFPS(60);
 
 	_Scene sceneManager;
-	SortVisualizer sortVisualizer;
+	
 
 	while (!WindowShouldClose())
 	{
